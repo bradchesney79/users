@@ -54,7 +54,21 @@ convert u_uid_list to p_uid_list
 }
 else {
 
-Uid to username
+if u_username_list > 0 {
+
+convert u_username_list to p_username_list
+
+}
+
+If p_user_list > 0 {
+
+for each p_user {
+
+convert p_user to a p_uid
+
+append p_uid to p_uid_list
+
+}
 
 }
 
@@ -74,7 +88,7 @@ Set default uid 1000 user as single list member in p_uid_list
 }
 
 
-
+-----
 If p_group_list > 0 {
 
 for each p_group {
