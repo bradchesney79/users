@@ -6,20 +6,23 @@ Include apt
 
 If u_user_list, u_uid_list, or u_group_list lists specified {
 
-if u_group_list {
+if u_group_list > 0 {
 
-convert u_group_list to p_group_list
+convert u_group_list to i_group_list
 
 if output_type == uid {
 
-If p_group_list > 0 {
+If i_group_list > 0 {
 
-for each p_group {
+for each i_group {
 
-convert p_groups to p_uids lists
+convert i_groups to i_uids_list lists
 
-append p_uids to p_uid_list list
-
+for each i_uid_list { 
+for each i_uid {
+append i_uid p_uid_list
+}
+}
 }
 
 }
@@ -27,9 +30,9 @@ append p_uids to p_uid_list list
 }
 else {
 
-If p_group_list > 0 {
+If i_group_list > 0 {
 
-for each p_group {
+for each i_group_list {
 
 convert p_groups to p_users lists
 
