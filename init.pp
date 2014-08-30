@@ -1,22 +1,66 @@
-Input is u_group_list, u_user_list, u_uid_list, &&/|| output_type (p_username_list or p_uid_list)
+# Class: user_aggregator
+#
+# This module manages user_aggregator
+#
+# Parameters: none
+#
+# Actions:
+#
+# Requires: see Modulefile
+#
+# Sample Usage:
+#
+class user_aggregator {
 
-Verify OS
-Include apt
+  Input is u_group_list, u_groupid_list, u_user_list, u_uid_list, &&/|| output_type (p_username_list or p_uid_list)
 
+  Verify OS
 
-If u_user_list, u_uid_list, or u_group_list lists specified {
+  if u_group_list > 0 {
+    for each u_group_list {
+      if u_group_list type != $output_type {
+        convert u_group_list to $output_type
+      }
+      append u_group_list to p_group_list
+    }
+    unset u_group_list
+  }
 
-if u_group_list > 0 {
+  if u_groupid_list > 0 {
+    for each u_groupid_list {
+      if u_groupid_list type != $output_type {
+        convert u_groupid_list to $output_type
+      }
+      append u_groupid_list to p_group_list
+    }
+    unset u_groupid_list
+  
+        for each $output_type list {
+          for each user {
+            append user identifier of $output_type to $output_type list
+          }
+        }
+      }
+      
+    }
+  unset u_groupid_list
+  unset i_groupid_lists
+  }
 
-convert u_group_list to i_group_list
-
-if output_type == uid {
-
-If i_group_list > 0 {
-
-for each i_group {
-
-convert i_groups to i_uids_list lists
+  
+  if u_groupid_list > 0 {
+    convert u_groupid_lists to i_groupid_lists
+    for each i_groupid_list {
+      for each i_groupid {
+        convert i_groupids to ('i_' + $output_type + '_list') lists
+        for each ('i_' + $output_type + '_list') {
+          for each user {
+            append user to p_user_list
+          }
+        }
+      }
+    }
+  }
 
 for each i_uid_list { 
 for each i_uid {
@@ -89,6 +133,8 @@ Set default uid 1000 user as single list member in p_uid_list
 }
 
 
-Add users to dialout group
-Add packages
 
+
+
+
+}
